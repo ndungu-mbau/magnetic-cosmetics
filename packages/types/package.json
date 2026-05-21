@@ -1,0 +1,7 @@
+{
+  "name": "@magnetic/types",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "payload": "3.84.1"
+  }
+}
