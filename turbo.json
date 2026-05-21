@@ -10,7 +10,7 @@
       "outputs": [".output/**", "dist/**", ".strapi/**", ".next/**"]
     },
     "generate:types": {
-      "outputs": ["apps/cms/src/payload-types.ts"]
+      "outputs": ["src/payload-types.ts"]
     }
   }
 }
