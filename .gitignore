@@ -1,0 +1,154 @@
+# =============================================================================
+# Magnetic Cosmetics — TanStack Start + Strapi Monorepo
+# =============================================================================
+
+# ── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ── Environment Variables ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Keep example files so developers know what vars are needed
+!.env.example
+!apps/**/.env.example
+
+# ── Build Outputs ─────────────────────────────────────────────────────────────
+dist/
+build/
+out/
+
+# TanStack Start / Vite / Vinxi
+.output/
+.vinxi/
+.nitro/
+.vercel/
+
+# ── Strapi (apps/cms) ─────────────────────────────────────────────────────────
+apps/cms/.strapi/
+apps/cms/.tmp/
+apps/cms/build/
+apps/cms/dist/
+
+# Strapi exports / imports
+apps/cms/exports/
+apps/cms/imports/
+
+# Strapi SQLite database (dev only — use Postgres in production)
+apps/cms/*.db
+apps/cms/*.db-journal
+
+# Strapi uploads (media files managed locally)
+apps/cms/public/uploads/
+
+# ── TanStack Start (apps/shop) ────────────────────────────────────────────────
+apps/shop/.output/
+apps/shop/.vinxi/
+apps/shop/.nitro/
+
+# ── Turborepo ─────────────────────────────────────────────────────────────────
+.turbo/
+
+# ── TypeScript ────────────────────────────────────────────────────────────────
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# ── OS & Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+.cache/
+.temp/
+*.local
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+.playwright
+playwright-report/
+playwright-report/index.html
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+public/media
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+__unconfig*
+todos.json

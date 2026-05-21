@@ -1,0 +1,16 @@
+{
+  "name": "magnetic-cosmetics",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "dev:cms": "pnpm --filter cms dev",
+    "dev:shop": "pnpm --filter shop dev",
+    "generate:types": "turbo run generate:types && cp apps/cms/src/payload-types.ts packages/types/src/index.ts"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@11.0.9"
+}
