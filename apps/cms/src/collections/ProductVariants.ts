@@ -105,30 +105,22 @@ export const ProductVariants: CollectionConfig = {
 
     // ── Inventory ─────────────────────────────────────────────────────────────
     {
-      // Mirrors Medusa's `manage_inventory`
       name: 'manageInventory',
       type: 'checkbox',
       defaultValue: true,
       admin: {
         position: 'sidebar',
-        description: 'Track stock quantity for this variant.',
+        description:
+          'Track stock via Inventory Levels. Disable for made-to-order or digital items.',
       },
     },
     {
-      // Mirrors Medusa's `inventory_quantity`
-      name: 'inventoryQuantity',
-      type: 'number',
-      defaultValue: 0,
-      admin: { position: 'sidebar' },
-    },
-    {
-      // Mirrors Medusa's `allow_backorder`
       name: 'allowBackorder',
       type: 'checkbox',
       defaultValue: false,
       admin: {
         position: 'sidebar',
-        description: 'Allow purchases even when out of stock.',
+        description: 'Allow purchases even when all locations are out of stock.',
       },
     },
 

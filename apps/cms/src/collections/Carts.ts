@@ -19,7 +19,7 @@ export const Carts: CollectionConfig = {
     defaultColumns: ['id', 'customer', 'email', 'status', 'total', 'updatedAt'],
   },
   access: {
-    read: () => true,   // validated server-side by cart token or session
+    read: () => true, // validated server-side by cart token or session
     create: () => true,
     update: () => true,
     delete: () => true,
@@ -31,7 +31,7 @@ export const Carts: CollectionConfig = {
       type: 'select',
       options: [
         { label: 'Active', value: 'active' },
-        { label: 'Completed', value: 'completed' },   // converted to order
+        { label: 'Completed', value: 'completed' }, // converted to order
         { label: 'Abandoned', value: 'abandoned' },
       ],
       defaultValue: 'active',
@@ -117,8 +117,9 @@ export const Carts: CollectionConfig = {
       name: 'shippingMethod',
       type: 'group',
       fields: [
-        { name: 'label', type: 'text' },         // e.g. "Standard Delivery"
-        { name: 'price', type: 'number' },        // in smallest currency unit
+        { name: 'id', type: 'text' },
+        { name: 'label', type: 'text' }, // e.g. "Standard Delivery"
+        { name: 'price', type: 'number' }, // in smallest currency unit
         { name: 'estimatedDays', type: 'number' },
       ],
     },
@@ -143,16 +144,24 @@ export const Carts: CollectionConfig = {
       required: true,
     },
     {
-      name: 'subtotal', type: 'number', defaultValue: 0,
+      name: 'subtotal',
+      type: 'number',
+      defaultValue: 0,
     },
     {
-      name: 'shippingTotal', type: 'number', defaultValue: 0,
+      name: 'shippingTotal',
+      type: 'number',
+      defaultValue: 0,
     },
     {
-      name: 'taxTotal', type: 'number', defaultValue: 0,
+      name: 'taxTotal',
+      type: 'number',
+      defaultValue: 0,
     },
     {
-      name: 'total', type: 'number', defaultValue: 0,
+      name: 'total',
+      type: 'number',
+      defaultValue: 0,
     },
 
     // ── Payment intent (created before final confirmation) ───────────────────
