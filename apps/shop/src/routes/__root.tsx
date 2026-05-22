@@ -8,6 +8,11 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { TanStackDevtools } from '@tanstack/react-devtools'
+
+import TanStackQueryDevtools from '@/integrations/tanstack-query/devtools'
+
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -104,6 +109,19 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         <Scripts />
+        <TanStackDevtools
+          config={{
+            position: 'bottom-right',
+          }}
+          plugins={[
+            {
+              name: 'Tanstack Router',
+              render: <TanStackRouterDevtoolsPanel />,
+              defaultOpen: true
+            },
+            TanStackQueryDevtools,
+          ]}
+        />
       </body>
     </html>
   );
