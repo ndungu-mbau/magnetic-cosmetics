@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@magnetic/types": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.15",
     "@t3-oss/env-core": "^0.13.10",
     "@tailwindcss/vite": "^4.1.18",
