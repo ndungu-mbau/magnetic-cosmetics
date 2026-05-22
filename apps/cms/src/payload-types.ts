@@ -79,6 +79,9 @@ export interface Config {
     discounts: Discount;
     reviews: Review;
     carts: Cart;
+    'inventory-levels': InventoryLevel;
+    'stock-locations': StockLocation;
+    'stock-movements': StockMovement;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -97,6 +100,9 @@ export interface Config {
     discounts: DiscountsSelect<false> | DiscountsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     carts: CartsSelect<false> | CartsSelect<true>;
+    'inventory-levels': InventoryLevelsSelect<false> | InventoryLevelsSelect<true>;
+    'stock-locations': StockLocationsSelect<false> | StockLocationsSelect<true>;
+    'stock-movements': StockMovementsSelect<false> | StockMovementsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -473,12 +479,11 @@ export interface ProductVariant {
    */
   upc?: string | null;
   /**
-   * Track stock quantity for this variant.
+   * Track stock via Inventory Levels. Disable for made-to-order or digital items.
    */
   manageInventory?: boolean | null;
-  inventoryQuantity?: number | null;
   /**
-   * Allow purchases even when out of stock.
+   * Allow purchases even when all locations are out of stock.
    */
   allowBackorder?: boolean | null;
   /**
@@ -700,6 +705,7 @@ export interface Cart {
   };
   sameAsShipping?: boolean | null;
   shippingMethod?: {
+    id?: string | null;
     label?: string | null;
     price?: number | null;
     estimatedDays?: number | null;
@@ -722,6 +728,87 @@ export interface Cart {
    */
   completedOrderId?: (number | null) | Order;
   customerNote?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inventory-levels".
+ */
+export interface InventoryLevel {
+  id: number;
+  variant: number | ProductVariant;
+  location: number | StockLocation;
+  stockedQuantity: number;
+  /**
+   * Managed automatically. Units held by active carts.
+   */
+  reservedQuantity: number;
+  /**
+   * Computed automatically. stockedQuantity − reservedQuantity.
+   */
+  availableQuantity?: number | null;
+  lowStockThreshold?: number | null;
+  /**
+   * Trigger a restock when stock falls to this level.
+   */
+  reorderPoint?: number | null;
+  /**
+   * How many units to reorder when reorderPoint is hit.
+   */
+  reorderQuantity?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stock-locations".
+ */
+export interface StockLocation {
+  id: number;
+  /**
+   * e.g. "Nairobi Warehouse", "Westgate Pop-Up"
+   */
+  name: string;
+  type?: ('warehouse' | 'store' | '3pl') | null;
+  address?: {
+    address1?: string | null;
+    city?: string | null;
+    countryCode?: string | null;
+  };
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stock-movements".
+ */
+export interface StockMovement {
+  id: number;
+  variant: number | ProductVariant;
+  location: number | StockLocation;
+  type:
+    | 'restock'
+    | 'sale'
+    | 'return'
+    | 'adjustment'
+    | 'damage'
+    | 'transfer_out'
+    | 'transfer_in'
+    | 'reserved'
+    | 'reservation_released';
+  /**
+   * Use positive numbers for stock in, negative for stock out.
+   */
+  quantity: number;
+  quantityAfter: number;
+  /**
+   * e.g. "PO-2025-041", "Order MC-00123", "Damaged in transit"
+   */
+  reason?: string | null;
+  order?: (number | null) | Order;
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -792,6 +879,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'carts';
         value: number | Cart;
+      } | null)
+    | ({
+        relationTo: 'inventory-levels';
+        value: number | InventoryLevel;
+      } | null)
+    | ({
+        relationTo: 'stock-locations';
+        value: number | StockLocation;
+      } | null)
+    | ({
+        relationTo: 'stock-movements';
+        value: number | StockMovement;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1065,7 +1164,6 @@ export interface ProductVariantsSelect<T extends boolean = true> {
   ean?: T;
   upc?: T;
   manageInventory?: T;
-  inventoryQuantity?: T;
   allowBackorder?: T;
   weight?: T;
   height?: T;
@@ -1231,6 +1329,7 @@ export interface CartsSelect<T extends boolean = true> {
   shippingMethod?:
     | T
     | {
+        id?: T;
         label?: T;
         price?: T;
         estimatedDays?: T;
@@ -1247,6 +1346,56 @@ export interface CartsSelect<T extends boolean = true> {
   cartToken?: T;
   completedOrderId?: T;
   customerNote?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inventory-levels_select".
+ */
+export interface InventoryLevelsSelect<T extends boolean = true> {
+  variant?: T;
+  location?: T;
+  stockedQuantity?: T;
+  reservedQuantity?: T;
+  availableQuantity?: T;
+  lowStockThreshold?: T;
+  reorderPoint?: T;
+  reorderQuantity?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stock-locations_select".
+ */
+export interface StockLocationsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  address?:
+    | T
+    | {
+        address1?: T;
+        city?: T;
+        countryCode?: T;
+      };
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stock-movements_select".
+ */
+export interface StockMovementsSelect<T extends boolean = true> {
+  variant?: T;
+  location?: T;
+  type?: T;
+  quantity?: T;
+  quantityAfter?: T;
+  reason?: T;
+  order?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
 }
